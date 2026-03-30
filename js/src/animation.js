@@ -68,6 +68,8 @@ export class animation{
 
         }
 
+        // sets a index for the y axis
+
         for (let j = 0; j < state.frames; j++){
 
             let positionX = j * this.playerCharacter._SPRITE_WIDTH;

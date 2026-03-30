@@ -21,13 +21,17 @@ export class game {
 
 
     Play(){
+
         this._MENUS.buttonClick();
         this._ANIMATION.playerCharacter = this.playerCharacter;
         this._ANIMATION.canvas = this._CANVAS; 
         this._ANIMATION.animate();
+        
     }
 
     Debug(){
+
         window.game = this;
+
     }
 }
