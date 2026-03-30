@@ -17,7 +17,7 @@ export class menus{
     }
 
     //hi
-
+    // ball
     buttonClick() {
 
         window.addEventListener('click', (e) => {
