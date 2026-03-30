@@ -1,6 +1,7 @@
 
 import { canvas } from "./canvas.js";
 import { player } from "./player.js";
+import { game } from "./game.js";
 export class animation{
 
     constructor(){
@@ -58,18 +59,20 @@ export class animation{
     initializeAnimation(){
 
 
-        this.player._PLAYER_IMAGE = 'img/shadow_dog.png';
+        this.playerCharacter._PLAYERIMAGE.src = 'img/shadow_dog.png';
 
         this._ANIMATION_STATE.forEach((state, index) => {
 
         let frames = {
+
             loc: [],
+
         }
 
         for (let j = 0; j < state.frames; j++){
 
-            let positionX = j * this.player._SPRITE_WIDTH;
-            let positionY = index * this.player._SPRITE_HEIGHT;
+            let positionX = j * this.playerCharacter._SPRITE_WIDTH;
+            let positionY = index * this.playerCharacter._SPRITE_HEIGHT;
 
             frames.loc.push({x: positionX, y: positionY});
 
@@ -82,22 +85,21 @@ export class animation{
 
     animate(){
 
-        if(!this.initialize)(
+        if(!this.initialize){
 
             this.initializeAnimation()
 
-        )
+        }
 
         this.canvas._CTX.clearRect(0, 0, this.canvas._CANVAS_WIDTH, this.canvas._CANVAS_HEIGHT);
 
-        this.position = Math.floor(this.gameFrame/this._STAGGER_FRAMES) % this._SPRITE_ANIMATION[this.player.playerState].loc.length;
-        this.frameX = this.player._SPRITE_WIDTH * this.position;
-        this.frameY = this._SPRITE_ANIMATION[this.player.playerState].loc[this.position].y;
+        this.position = Math.floor(this.gameFrame/this._STAGGER_FRAMES) % this._SPRITE_ANIMATION[this.playerCharacter.playerState].loc.length;
+        this.frameX = this.playerCharacter._SPRITE_WIDTH * this.position;
+        this.frameY = this._SPRITE_ANIMATION[this.playerCharacter.playerState].loc[this.position].y;
 
-        this.canvas._CTX.drawImage(this.player._PLAYERIMAGE, this.frameX, this.frameY,
-        this.player._SPRITE_WIDTH, this.player._SPRITE_HEIGHT, 0, 0, this.player._SPRITE_WIDTH, this.player._SPRITE_HEIGHT);
-
-        this.checkHitDetection();
+        this.canvas._CTX.drawImage(this.playerCharacter._PLAYERIMAGE, this.frameX, this.frameY,
+        this.playerCharacter._SPRITE_WIDTH, this.playerCharacter._SPRITE_HEIGHT, 0, 0,
+        this.playerCharacter._SPRITE_WIDTH, this.playerCharacter._SPRITE_HEIGHT);
 
         this.initialize = true
 
