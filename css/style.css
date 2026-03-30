@@ -1,0 +1,119 @@
+:root {
+
+    --radient_textcolor: linear-gradient(90deg, darkred, red);
+    --radient_textcolor_hover: linear-gradient(90deg, blue, darkblue);
+    --radient_background: linear-gradient(to right, white, rgb(203, 238, 250), white), linear-gradient(to right, black, gold,black);
+    --radient_background_hover: linear-gradient(to right, rgb(203, 238, 250), white, rgb(203, 238, 250)), linear-gradient(to right, gold, black,gold);
+    
+}
+
+#game {
+
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.score {
+
+    display: none;
+    position: absolute;
+    grid-template-columns: 0fr 0fr 0fr;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 2%;
+    font-size: 3dvh;
+    text-decoration: underline;
+    z-index: 1;
+
+}
+
+.score::after{
+
+    content: "";
+    position: absolute;
+    width: 125%;
+    height: 125%;
+    left: -17%;
+    top: -17%;
+    box-shadow: 100px;
+    border: double 5px transparent;
+    border-radius: 30px;
+    background-image: var(--radient_background);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    z-index: -1;
+
+}
+
+#start {
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    font: italic;
+    font-size: 350%;
+    box-shadow: 100px;
+    border: double 5px transparent;
+    border-radius: 30px;
+    background-image: var(--radient_background);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    z-index: -1;
+    width: 20%;
+    height: 15%;
+
+}
+
+#start:hover {
+
+    cursor: pointer;
+    box-shadow: 100px;
+    border: double 5px transparent;
+    border-radius: 30px;
+    background-image: var(--radient_background_hover);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    text-decoration: underline;
+    font-style: oblique;
+
+}
+
+body {
+
+    background-color: darkblue;
+
+}
+
+header {
+
+    text-align: center;
+
+}
+
+.game_title{
+
+    font: italic;
+    font-size: 350%;
+    box-shadow: 100px;
+    border: double 5px transparent;
+    border-radius: 30px;
+    background-image: var(--radient_background);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+}
+
+.ammo {
+
+    display: none;
+    position: absolute;
+    left: 2%;
+    bottom: 2%;
+
+}
