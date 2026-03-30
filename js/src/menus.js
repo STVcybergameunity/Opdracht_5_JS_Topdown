@@ -1,6 +1,4 @@
 
-import { ammo } from "./ammo.js";
-
 export class menus{
     
     
@@ -12,12 +10,10 @@ export class menus{
         this._GAME_CANVAS = document.querySelector("#game");
         this._SCORE_SCREEN = document.querySelector(".score");
         this._AMMO_ELEMENT = document.querySelector(".ammo");
-        this._AMMO = new ammo(12);
+        this._GAME_STARTED = false;
 
     }
 
-    //hi
-    // ball
     buttonClick() {
 
         window.addEventListener('click', (e) => {
@@ -32,26 +28,24 @@ export class menus{
 
                     this.startGame()
 
+                    this._GAME_STARTED = true
+
                     break;
 
                 default:
 
-                    if (this._AMMO.getCurrentAmmo() > 0) {
-
-                        this._AMMO.setCurrentAmmo(this._AMMO.getCurrentAmmo()-1);
-                        console.log(this._AMMO.getCurrentAmmo());
-
-                    } else {
-
-                        this._AMMO.reload;
-
-                    }
                     break;
 
             }
 
         })
         
+    }
+
+    getGameStarted(){
+
+        return this._GAME_STARTED
+
     }
 
     startGame() {
