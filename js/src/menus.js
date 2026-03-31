@@ -10,6 +10,7 @@ export class menus{
         this._GAME_CANVAS_ELEMENT = document.querySelector("#game");
         this._SCORE_SCREEN_ELEMENT = document.querySelector(".score");
         this._AMMO_ELEMENT = document.querySelector(".ammo");
+        this._BACKGROUND_ELEMENT = document.querySelector("#background")
 
         this._GAME_STARTED = false;
 
@@ -55,6 +56,7 @@ export class menus{
         this._GAME_SCREEN_ELEMENT.style.display = "grid";
         this._SCORE_SCREEN_ELEMENT.style.display = "grid"
         this._GAME_CANVAS_ELEMENT.style.display = "flex"
+        this._BACKGROUND_ELEMENT.style.display = "flex"
         this._AMMO_ELEMENT.style.display = "flex"
 
     }

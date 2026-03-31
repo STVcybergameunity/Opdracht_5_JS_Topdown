@@ -1,6 +1,7 @@
 
 import { canvas } from "./canvas.js";
 import { player } from "./player.js";
+
 export class animation{
 
     constructor(){
@@ -100,7 +101,7 @@ export class animation{
         this.frameY = this._SPRITE_ANIMATION[this.playerCharacter.playerState].loc[this.position].y;
 
         this.canvas._CTX.drawImage(this.playerCharacter._PLAYERIMAGE, this.frameX, this.frameY,
-        this.playerCharacter._SPRITE_WIDTH, this.playerCharacter._SPRITE_HEIGHT, 0, window.innerHeight - this.playerCharacter._DRAW_HEIGHT,
+        this.playerCharacter._SPRITE_WIDTH, this.playerCharacter._SPRITE_HEIGHT, 0, window.innerHeight - this.playerCharacter._DRAW_HEIGHT*1.5,
         this.playerCharacter._DRAW_WIDTH, this.playerCharacter._DRAW_HEIGHT);
 
         this.initialize = true
