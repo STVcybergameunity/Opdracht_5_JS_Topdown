@@ -1,22 +1,19 @@
 
-import { ammo } from "./ammo.js";
-
 export class menus{
     
     
 
     constructor(){
 
-        this._START_SCREEN = document.querySelector("header");
-        this._GAME_SCREEN = document.querySelector("main");
-        this._GAME_CANVAS = document.querySelector("#game");
-        this._SCORE_SCREEN = document.querySelector(".score");
+        this._START_SCREEN_ELEMENT = document.querySelector("header");
+        this._GAME_SCREEN_ELEMENT = document.querySelector("main");
+        this._GAME_CANVAS_ELEMENT = document.querySelector("#game");
+        this._SCORE_SCREEN_ELEMENT = document.querySelector(".score");
         this._AMMO_ELEMENT = document.querySelector(".ammo");
-        this._AMMO = new ammo(12);
+
+        this._GAME_STARTED = false;
 
     }
-
-    //hi
 
     buttonClick() {
 
@@ -32,20 +29,12 @@ export class menus{
 
                     this.startGame()
 
+                    this._GAME_STARTED = true
+
                     break;
 
                 default:
 
-                    if (this._AMMO.getCurrentAmmo() > 0) {
-
-                        this._AMMO.setCurrentAmmo(this._AMMO.getCurrentAmmo()-1);
-                        console.log(this._AMMO.getCurrentAmmo());
-
-                    } else {
-
-                        this._AMMO.reload;
-
-                    }
                     break;
 
             }
@@ -54,12 +43,18 @@ export class menus{
         
     }
 
+    getGameStarted(){
+
+        return this._GAME_STARTED
+
+    }
+
     startGame() {
 
-        this._START_SCREEN.style.display = "none";
-        this._GAME_SCREEN.style.display = "grid";
-        this._SCORE_SCREEN.style.display = "grid"
-        this._GAME_CANVAS.style.display = "flex"
+        this._START_SCREEN_ELEMENT.style.display = "none";
+        this._GAME_SCREEN_ELEMENT.style.display = "grid";
+        this._SCORE_SCREEN_ELEMENT.style.display = "grid"
+        this._GAME_CANVAS_ELEMENT.style.display = "flex"
         this._AMMO_ELEMENT.style.display = "flex"
 
     }

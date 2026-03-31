@@ -1,71 +1,67 @@
-export class ammo{
+// export class ammo{
 
-    #maxAmmo;
-    #currentAmmo;
-    #reloading;
+//     #maxAmmo;
+//     #currentAmmo;
+//     #reloading;
 
-    constructor(maxAmmo){
+//     constructor(maxAmmo){
 
-        this._MAX_AMMO_ELEMENT = document.querySelector(".max_ammo")
-        this._CURRENT_AMMO_ELEMENT = document.querySelector(".current_ammo")
-        this.#maxAmmo = maxAmmo;
-        this.#currentAmmo = this.#maxAmmo;
-        this.#reloading = false;
+//         this._MAX_AMMO_ELEMENT = document.querySelector(".max_ammo")
+//         this._CURRENT_AMMO_ELEMENT = document.querySelector(".current_ammo")
+//         this.#maxAmmo = maxAmmo;
+//         this.#currentAmmo = this.#maxAmmo;
+//         this.#reloading = false;
 
-    }
+//     }
 
-    setMaxAmmo(magMaximum) {
+//     setMaxAmmo(magMaximum) {
         
-        this._MAX_AMMO_ELEMENT.innerHTML = magMaximum + "/"
+//         this.#maxAmmo=magMaximum
+//         this._MAX_AMMO_ELEMENT.innerHTML = magMaximum + "/"
 
-    }
+//     }
 
-    setCurrentAmmo(magCurrent) {
+//     setCurrentAmmo(magCurrent) {
 
-        this.#currentAmmo=magCurrent;
-        this._CURRENT_AMMO_ELEMENT.innerHTML = this.#currentAmmo;
+//         this.#currentAmmo=magCurrent;
+//         this._CURRENT_AMMO_ELEMENT.innerHTML = this.#currentAmmo;
 
-    }
+//     }
 
-    getCurrentAmmo() {
-        return this.#currentAmmo;
-    }
+//     getCurrentAmmo() {
+//         return this.#currentAmmo;
+//     }
 
-    getMaxAmmo() {
-        return this.#maxAmmo;
-    }
+//     getMaxAmmo() {
+//         return this.#maxAmmo;
+//     }
 
-    shoot(){
 
-        // console.log(e.pageX, e.pageY)
 
-        if (this.currentAmmo >= 0){
+//     reload(){
 
-            this.currentAmmo--;
+        
+//         console.log(this.#reloading)
 
-            return
-        } else {
-            this.currentAmmo=this._MAX_AMMO_ELEMENT;
+//         if (this.#reloading === false){
 
-            return
-        }
-    }
+//             this.#reloading = true;
 
-    reload(){
-        console.log(this.#reloading)
-        if (this.#reloading === false){
+//             console.log(this.#reloading)
 
-            this.#reloading = true;
+//             setTimeout(() => {
 
-            console.log(this.#reloading)
-            setTimeout(function(){
-                this.#currentAmmo = this.#maxAmmo;
-                this.#reloading = false;
-            }, 2000)
+//                 this.#currentAmmo = this.#maxAmmo;
+
+//                 this._CURRENT_AMMO_ELEMENT.innerHTML = this.#maxAmmo
+
+//                 this.#reloading = false;
+                
+//             }, 2000)
             
-        } else {
-            console.log('still balling...');
-        }
-    }
+//         } else {
+//             console.log('still reloading...');
+//         }
+//     }
 
-}
+// }
