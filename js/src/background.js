@@ -26,7 +26,6 @@ export class background{
  
         const loadImage = (src) => new Promise(resolve => {
             const img = new Image();
-            // FIX 2: Wait for each image to finish loading before drawing
             img.onload = () => resolve(img);
             img.src = src;
         });

@@ -4,6 +4,7 @@ import { animation } from "./animation.js";
 import { player } from "./player.js";
 import { canvas } from "./canvas.js";
 import { background } from "./background.js";
+import { movement } from "./movement.js";
 // import { shoot } from "./shoot.js";
 
 export class game {
@@ -14,11 +15,12 @@ export class game {
     constructor(){
         this._MENUS = new menus();
         this.playerCharacter = new player();
-        this. _CANVAS = new canvas();
+        this._CANVAS = new canvas();
         this._ANIMATION = new animation(this.playerCharacter, this._CANVAS);
         this._BACKGROUND = new background(this._CANVAS, null, 1)
         this.loopID = null;
         this.lastTime = 0;
+        this.movement = new movement()
     }
 
 

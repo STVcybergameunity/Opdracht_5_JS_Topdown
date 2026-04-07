@@ -1,6 +1,7 @@
 
 import { canvas } from "./canvas.js";
 import { player } from "./player.js";
+import { spriteAnimations, PlayerSize } from './constants.js'
 
 export class animation{
 
@@ -73,8 +74,8 @@ export class animation{
 
         for (let j = 0; j < state.frames; j++){
 
-            let positionX = j * this.playerCharacter._SPRITE_WIDTH;
-            let positionY = index * this.playerCharacter._SPRITE_HEIGHT;
+            let positionX = j * PlayerSize._WIDTH;
+            let positionY = index * PlayerSize._HEIGHT;
 
             frames.loc.push({x: positionX, y: positionY});
 
@@ -87,6 +88,10 @@ export class animation{
 
     animate(){
 
+        const _PLAYERSPAWNHEIGHT = this.playerCharacter._DRAW_HEIGHT*1.5
+        const _SPRITE_WIDTH = PlayerSize._WIDTH
+        const _SPRITE_HEIGHT = PlayerSize._HEIGHT
+
         if(!this.initialize){
 
             this.initializeAnimation()
@@ -95,13 +100,13 @@ export class animation{
 
         this.canvas._CTX.clearRect(0, 0, this.canvas._CANVAS_WIDTH, this.canvas._CANVAS_HEIGHT);
 
-        this.position = Math.floor(this.gameFrame/this._STAGGER_FRAMES) % this._SPRITE_ANIMATION[this.playerCharacter.playerState].loc.length;
+        this.position = Math.floor(this.gameFrame/this._STAGGER_FRAMES) % this._SPRITE_ANIMATION[this.playerCharacter.entityState].loc.length;
         
-        this.frameX = this.playerCharacter._SPRITE_WIDTH * this.position;
-        this.frameY = this._SPRITE_ANIMATION[this.playerCharacter.playerState].loc[this.position].y;
+        this.frameX = _SPRITE_WIDTH * this.position;
+        this.frameY = this._SPRITE_ANIMATION[this.playerCharacter.entityState].loc[this.position].y;
 
         this.canvas._CTX.drawImage(this.playerCharacter._PLAYERIMAGE, this.frameX, this.frameY,
-        this.playerCharacter._SPRITE_WIDTH, this.playerCharacter._SPRITE_HEIGHT, 0, window.innerHeight - this.playerCharacter._DRAW_HEIGHT*1.5,
+        _SPRITE_WIDTH, _SPRITE_HEIGHT, 0, window.innerHeight - _PLAYERSPAWNHEIGHT,
         this.playerCharacter._DRAW_WIDTH, this.playerCharacter._DRAW_HEIGHT);
 
         this.initialize = true
