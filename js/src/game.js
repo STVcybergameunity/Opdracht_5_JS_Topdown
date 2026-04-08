@@ -41,7 +41,8 @@ export class game {
  
         this.playerCharacter.update(delta, this.movement.getKeysArray(), this.playerCharacter.distanceFromSide);
  
-        this._ANIMATION.animate(this.playerCharacter.moveBackground);
+        this._ANIMATION.animate();
+        this._BACKGROUND.animateBackground(this.playerCharacter.moveBackground)
  
         requestAnimationFrame((timestamp) => this.loop(timestamp));
  

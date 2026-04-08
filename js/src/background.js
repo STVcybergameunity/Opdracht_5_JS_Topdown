@@ -80,6 +80,7 @@ export class background{
  
         }
  
+
         this.canvas._BACKGROUND_CTX.clearRect(0, 0, this.canvas._BACKGROUND_CANVAS_WIDTH, this.canvas._BACKGROUND_CANVAS_HEIGHT);
  
         this._BACKGROUND_LAYERS_IMAGES.forEach(object => {
@@ -90,8 +91,6 @@ export class background{
         });
  
         this.backgroundFrame++;
- 
-        requestAnimationFrame(() => this.animateBackground());
  
     };
  

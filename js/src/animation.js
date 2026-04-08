@@ -48,7 +48,7 @@ export class animation {
 
     }
 
-    animate(moveBackground) {
+    animate() {
 
         const _SPRITE_WIDTH = PlayerSize._WIDTH;
         const _SPRITE_HEIGHT = PlayerSize._HEIGHT;
@@ -70,7 +70,6 @@ export class animation {
         this.frameY = spriteFrames.loc[this.position].y;
 
         this.canvas._CTX.drawImage(
-            
             this.playerCharacter._PLAYERIMAGE,
             this.frameX, this.frameY,
             _SPRITE_WIDTH, _SPRITE_HEIGHT,
@@ -78,19 +77,9 @@ export class animation {
             window.innerHeight - this.playerCharacter.currentHeight,
             this.playerCharacter._DRAW_WIDTH,
             this.playerCharacter._DRAW_HEIGHT
+        );
 
-        )
-
-        if (moveBackground === true){
-
-            this.gameFrame++;
-
-        }
-        else{
-
-            return
-
-        }
+        this.gameFrame++;
 
     }
 

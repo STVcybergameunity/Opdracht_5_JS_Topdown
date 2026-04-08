@@ -19,7 +19,7 @@ export class player{
         this.currentHeight = this._PLAYERSPAWNHEIGHT
         this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
         this.currentHeight = this._GROUND_HEIGHT;
-        this.moveBackground = true
+        this.moveBackground = false
 
     }
 
@@ -62,9 +62,10 @@ export class player{
             const keys = keysDown;
             if (keys[KEYS._MOVELEFT] || keys[KEYS._MOVERIGHT]) {
                 this.entityState = "run";
-                this.moveBackground = true
+
             } else {
-                this.entityState = "idle";
+                this.entityState = "run";
+
             }
         }
  
