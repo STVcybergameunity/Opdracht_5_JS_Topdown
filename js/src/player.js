@@ -34,7 +34,7 @@ export class player{
 
     }
  
-    update(delta, keysDown, distanceFromSide) {
+    update(delta, keysDown) {
  
         if (keysDown[KEYS._JUMP] && !this.isJumping) {
             this.jump();
@@ -52,7 +52,7 @@ export class player{
         }
  
         if (this.isJumping) {
-            if (this.velocityY < 0) {
+            if (this.velocityY > 0) {
                 this.entityState = "jump";
             } else {
                 this.entityState = "fall";
@@ -66,25 +66,6 @@ export class player{
             } else {
                 this.entityState = "idle";
             }
-        }
- 
-    }
- 
-    horizontalMovement(delta, keysDown) {
- 
-        if (KEYS._MOVELEFT in this.movement.keysDown) {
-            // move left
-        }
-        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0) {
- 
-            this.distanceFromSide = window.innerWidth * 0.10;
-            return this.distanceFromSide;
- 
-        }
-        if (this.distanceFromSide > 0) {
- 
-            this.distanceFromSide--;
- 
         }
  
     }

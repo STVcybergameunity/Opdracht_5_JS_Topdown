@@ -9,9 +9,6 @@ import { movement } from "./movement.js";
  
 export class game {
  
-    _MENUS;
-    _WEAPON;
- 
     constructor() {
  
         this._MENUS = new menus();
