@@ -1,3 +1,4 @@
+import { animation } from "./animation.js";
 import { PlayerSize, KEYS, _GRAVITY } from "./constants.js";
 export class player{
 
@@ -13,9 +14,12 @@ export class player{
         this.animationTimer = 0;
         this.animationInterval = 200;
         this.velocityY = 0;
+        this.distanceFromSide = 0
         this.isJumping = false
-        this._PLAYERSPAWNHEIGHT = this._DRAW_HEIGHT*1.5
         this.currentHeight = this._PLAYERSPAWNHEIGHT
+        this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
+        this.currentHeight = this._GROUND_HEIGHT;
+        this.moveBackground = true
 
     }
 
@@ -23,43 +27,66 @@ export class player{
 
         if (!this.isJumping) {
 
-            this.velocityY = -15;
+            this.velocityY += 30;
             this.isJumping = true;
 
         }
 
     }
-
-    update(delta, keysDown){
-
-        console.log(this.movement.keysDown)
-
-        if (keysDown[KEYS._JUMP] && this.isJumping === false) {
+ 
+    update(delta, keysDown, distanceFromSide) {
+ 
+        if (keysDown[KEYS._JUMP] && !this.isJumping) {
             this.jump();
-            this.velocityY += _GRAVITY;
-            this.currentHeight = this._PLAYERSPAWNHEIGHT += this.velocityY;
-            this.entityState = "jump"
         }
-
-        if (this.currentHeight > this._PLAYERSPAWNHEIGHT){
-
-            this.currentHeight = this._PLAYERSPAWNHEIGHT;
+ 
+        if (this.isJumping) {
+            this.velocityY -= _GRAVITY;
+            this.currentHeight += this.velocityY;
+        }
+ 
+        if (this.currentHeight <= this._GROUND_HEIGHT) {
+            this.currentHeight = this._GROUND_HEIGHT;
             this.velocityY = 0;
             this.isJumping = false;
-            
         }
-        
+ 
+        if (this.isJumping) {
+            if (this.velocityY < 0) {
+                this.entityState = "jump";
+            } else {
+                this.entityState = "fall";
+            }
+        } else {
+
+            const keys = keysDown;
+            if (keys[KEYS._MOVELEFT] || keys[KEYS._MOVERIGHT]) {
+                this.entityState = "run";
+                this.moveBackground = true
+            } else {
+                this.entityState = "idle";
+            }
+        }
+ 
     }
-
-    horizontalMovement(delta, keysDown){
-
+ 
+    horizontalMovement(delta, keysDown) {
+ 
         if (KEYS._MOVELEFT in this.movement.keysDown) {
             // move left
         }
-        if (KEYS._MOVERIGHT in this.movement.keysDown) {
-            // move right
+        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0) {
+ 
+            this.distanceFromSide = window.innerWidth * 0.10;
+            return this.distanceFromSide;
+ 
         }
-
+        if (this.distanceFromSide > 0) {
+ 
+            this.distanceFromSide--;
+ 
+        }
+ 
     }
-
+ 
 }
