@@ -13,14 +13,16 @@ export class game {
     _WEAPON;
 
     constructor(){
+
         this._MENUS = new menus();
-        this.playerCharacter = new player();
+        this.movement = new movement()
+        this.playerCharacter = new player(this.movement);
         this._CANVAS = new canvas();
-        this._ANIMATION = new animation(this.playerCharacter, this._CANVAS);
+        this._ANIMATION = new animation();
         this._BACKGROUND = new background(this._CANVAS, null, 1)
         this.loopID = null;
         this.lastTime = 0;
-        this.movement = new movement()
+
     }
 
 
@@ -29,17 +31,21 @@ export class game {
         this._MENUS.buttonClick();
         this._ANIMATION.playerCharacter = this.playerCharacter;
         this._ANIMATION.canvas = this._CANVAS; 
-        this._ANIMATION.animate();
         this._BACKGROUND.animateBackground();
+        this.loop();
         
     }
 
     loop(timestamp){
+
         if (!this.lastTime) this.lastTime = timestamp;
         const delta = (timestamp - this.lastTime);
         this.lastTime =  timestamp;
 
-        // this.playerCharacter.
+        this.playerCharacter.update(delta, this.movement.getKeysArray)
+
+        this._ANIMATION.animate(this.playerCharacter, this._CANVAS, this.movement);
+        
     }
 
     Debug(){

@@ -11,9 +11,9 @@ export const KEYS ={
 
 }
 
+export const _GRAVITY = 1
+
 export const PlayerAnimations = {
-
-
 
 }
 
@@ -26,9 +26,9 @@ export const PlayerSize = {
     _HEIGHT: 523
 }
 
-function getSpriteLoc(amountOfFrames,spritesheet_row){
+function getSpriteLoc(amountOfFrames, spritesheet_row, startFrame = 0){
     let returnarr = [];
-    for (let i = 0;i<=amountOfFrames;i++){
+    for (let i = 0 + startFrame;i<=amountOfFrames;i++){
         returnarr[i]={
             x: PlayerSize._WIDTH*i,
             y: PlayerSize._WIDTH*spritesheet_row
@@ -47,6 +47,9 @@ export const spriteAnimations = {
     },
     "jump": {
         loc: getSpriteLoc(7,1)
+    },
+    "fall": {
+        loc: getSpriteLoc(7,1,3)
     },
     "run": {
         loc: getSpriteLoc(7,2)
