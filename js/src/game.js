@@ -45,7 +45,7 @@ export class game {
         this.playerCharacter.update(delta, this.movement.getKeysArray)
 
         this._ANIMATION.animate(this.playerCharacter, this._CANVAS, this.movement);
-        
+
     }
 
     Debug(){
