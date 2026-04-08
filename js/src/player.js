@@ -1,9 +1,7 @@
-
-import { movement } from "./movement.js";
-import { PlayerSize } from "./constants.js";
+import { PlayerSize, KEYS, _GRAVITY } from "./constants.js";
 export class player{
 
-    constructor(){
+    constructor(movementInstance){
 
         this.entityState = "run";
         this._DRAW_WIDTH = PlayerSize._WIDTH*0.5;
@@ -11,20 +9,56 @@ export class player{
         this._PLAYERIMAGE = new Image();
 
         this.gameFrame = 0;
+        this.movement = movementInstance
         this.animationTimer = 0;
         this.animationInterval = 200;
+        this.velocityY = 0;
+        this.isJumping = false
+        this._PLAYERSPAWNHEIGHT = this._DRAW_HEIGHT*1.5
+        this.currentHeight = this._PLAYERSPAWNHEIGHT
 
     }
 
-    update(delta, keysdown){
+    jump() {
 
-    
+        if (!this.isJumping) {
 
+            this.velocityY = -15;
+            this.isJumping = true;
+
+        }
+
+    }
+
+    update(delta, keysDown){
+
+        console.log(this.movement.keysDown)
+
+        if (keysDown[KEYS._JUMP] && this.isJumping === false) {
+            this.jump();
+            this.velocityY += _GRAVITY;
+            this.currentHeight = this._PLAYERSPAWNHEIGHT += this.velocityY;
+            this.entityState = "jump"
+        }
+
+        if (this.currentHeight > this._PLAYERSPAWNHEIGHT){
+
+            this.currentHeight = this._PLAYERSPAWNHEIGHT;
+            this.velocityY = 0;
+            this.isJumping = false;
+            
+        }
+        
     }
 
     horizontalMovement(delta, keysDown){
 
-        
+        if (KEYS._MOVELEFT in this.movement.keysDown) {
+            // move left
+        }
+        if (KEYS._MOVERIGHT in this.movement.keysDown) {
+            // move right
+        }
 
     }
 
