@@ -34,7 +34,11 @@ export class player{
 
     }
  
-    update(delta, keysDown) {
+    update(delta, keysDown, _ANIMATION_STATE) {
+
+        /************************
+         *  Deals with jumping  *
+         ************************/
  
         if (keysDown[KEYS._JUMP] && !this.isJumping) {
             this.jump();
@@ -51,22 +55,38 @@ export class player{
             this.isJumping = false;
         }
  
-        if (this.isJumping) {
+        if (this.isJumping && !keysDown[KEYS._MOVERIGHT]) {
             if (this.velocityY > 0) {
                 this.entityState = "jump";
             } else {
                 this.entityState = "fall";
             }
-        } else {
+        } else if(!keysDown[KEYS._MOVERIGHT]){
 
-            const keys = keysDown;
-            if (keys[KEYS._MOVELEFT] || keys[KEYS._MOVERIGHT]) {
-                this.entityState = "run";
+            this.entityState = "run"
 
-            } else {
-                this.entityState = "run";
+        }
 
-            }
+        /*************************
+         *  Deals with teleport  *
+         *************************/
+        const animation = _ANIMATION_STATE;
+
+        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0) {
+
+            this.entityState = "boom"
+            
+            this.distanceFromSide = 1000
+
+        }
+        else if(this.distanceFromSide !=0){
+
+            this.distanceFromSide -= 8
+
+        }else if(this.distanceFromSide < 0){
+
+            this.distanceFromSide = 0
+
         }
  
     }

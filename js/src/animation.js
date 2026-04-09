@@ -9,7 +9,7 @@ export class animation {
 
         this.gameFrame = 0;
         this._STAGGER_FRAMES = 5;
-        this._ARRAY_STATE = ['getHit', 'idle', 'jump', 'fall', 'run', 'dizzy', 'sit', 'roll', 'bite', 'ko'];
+        this._ARRAY_STATE = ['getHit', 'idle', 'jump', 'fall', 'run', 'dizzy', 'sit', 'roll', 'bite', 'ko', 'boom'];
         this._SPRITE_ANIMATION = [];
         this._ANIMATION_STATE = [
             { name: 'idle',   frames: 7  },
@@ -22,13 +22,14 @@ export class animation {
             { name: 'bite',   frames: 7  },
             { name: 'ko',     frames: 12 },
             { name: 'getHit', frames: 4  },
+            { name: 'boom',   frames: 5  }
         ];
 
     }
 
     initializeAnimation() {
 
-        this.playerCharacter._PLAYERIMAGE.src = 'img/shadow_dog.png';
+        this.playerCharacter._PLAYERIMAGE.src = 'img/shadow_dog_with_boom.png';
 
         this._ANIMATION_STATE.forEach((state, index) => {
 
@@ -53,6 +54,7 @@ export class animation {
         const _SPRITE_WIDTH = PlayerSize._WIDTH;
         const _SPRITE_HEIGHT = PlayerSize._HEIGHT;
 
+
         if (!this.initialize) {
             this.initializeAnimation();
         }
@@ -70,13 +72,13 @@ export class animation {
         this.frameY = spriteFrames.loc[this.position].y;
 
         this.canvas._CTX.drawImage(
-            this.playerCharacter._PLAYERIMAGE,
-            this.frameX, this.frameY,
-            _SPRITE_WIDTH, _SPRITE_HEIGHT,
-            this.playerCharacter.distanceFromSide,
-            window.innerHeight - this.playerCharacter.currentHeight,
-            this.playerCharacter._DRAW_WIDTH,
-            this.playerCharacter._DRAW_HEIGHT
+        this.playerCharacter._PLAYERIMAGE,
+        this.frameX, this.frameY,
+        _SPRITE_WIDTH, _SPRITE_HEIGHT,
+        this.playerCharacter.distanceFromSide,
+        window.innerHeight - this.playerCharacter.currentHeight,
+        this.playerCharacter._DRAW_WIDTH,
+        this.playerCharacter._DRAW_HEIGHT
         );
 
         this.gameFrame++;

@@ -39,7 +39,7 @@ export class game {
         const delta = timestamp - this.lastTime;
         this.lastTime = timestamp;
  
-        this.playerCharacter.update(delta, this.movement.getKeysArray(), this.playerCharacter.distanceFromSide);
+        this.playerCharacter.update(delta, this.movement.getKeysArray(), this._ANIMATION._ANIMATION_STATE);
  
         this._ANIMATION.animate();
         this._BACKGROUND.animateBackground(this.playerCharacter.moveBackground)

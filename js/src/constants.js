@@ -17,7 +17,7 @@ export const PlayerAnimations = {
 
 }
 
-    /*****************************************
+/*****************************************
  * Allows you to input the location of   *
  * the correct image of the sprite sheet *
  *****************************************/

@@ -11,6 +11,7 @@ export class movement{
         window.addEventListener("keyup", (e) => this.removeFromKeysDown(e));
         window.addEventListener("mousedown", (e) => this.addToKeysDown(e));
         window.addEventListener("mouseup", (e) => this.removeFromKeysDown(e));
+        
     }
     // methods
 

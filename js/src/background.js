@@ -75,7 +75,6 @@ export class background{
                 this.loadBackgrounds();
             }
  
-            requestAnimationFrame(() => this.animateBackground());
             return;
  
         }
