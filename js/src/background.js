@@ -71,17 +71,15 @@ export class background{
  
         if(this.backgroundLoaded === false){
  
-            // FIX 4: Only trigger loadBackgrounds once, then keep waiting
             if(this._BACKGROUND_LAYERS_IMAGES.length === 0){
                 this.loadBackgrounds();
             }
  
-            requestAnimationFrame(() => this.animateBackground());
             return;
  
         }
  
-        // FIX 5: Use this.canvas (the instance) not bare canvas (the class)
+
         this.canvas._BACKGROUND_CTX.clearRect(0, 0, this.canvas._BACKGROUND_CANVAS_WIDTH, this.canvas._BACKGROUND_CANVAS_HEIGHT);
  
         this._BACKGROUND_LAYERS_IMAGES.forEach(object => {
@@ -92,8 +90,6 @@ export class background{
         });
  
         this.backgroundFrame++;
- 
-        requestAnimationFrame(() => this.animateBackground());
  
     };
  

@@ -1,4 +1,5 @@
-import { PlayerSize, KEYS, _GRAVITY } from "./constants.js";
+import { animation } from "./animation.js";
+import { PlayerSize, KEYS, _GRAVITY, _SKILLCOOLDOWNT, _ELEMENTS } from "./constants.js";
 export class player{
 
     constructor(movementInstance){
@@ -8,14 +9,19 @@ export class player{
         this._DRAW_HEIGHT = PlayerSize._HEIGHT*0.5;
         this._PLAYERIMAGE = new Image();
 
+        this.skillCooldownT = _SKILLCOOLDOWNT; // ms
         this.gameFrame = 0;
         this.movement = movementInstance
         this.animationTimer = 0;
         this.animationInterval = 200;
         this.velocityY = 0;
+        this.distanceFromSide = 0
         this.isJumping = false
-        this._PLAYERSPAWNHEIGHT = this._DRAW_HEIGHT*1.5
         this.currentHeight = this._PLAYERSPAWNHEIGHT
+        this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
+        this.currentHeight = this._GROUND_HEIGHT;
+        this.boomPlaying = false;
+        this.skillCooldown = false
 
     }
 
@@ -23,43 +29,94 @@ export class player{
 
         if (!this.isJumping) {
 
-            this.velocityY = -15;
+            this.velocityY += 30;
             this.isJumping = true;
 
         }
 
     }
 
-    update(delta, keysDown){
+    onBoomComplete() {
+        this.boomPlaying = false;
+        this.entityState = "run"
+    }
+ 
+    update(delta, keysDown, _ANIMATION_STATE) {
 
-        console.log(this.movement.keysDown)
+        if (this.skillCooldown && this.skillCooldownT > 0){
 
-        if (keysDown[KEYS._JUMP] && this.isJumping === false) {
-            this.jump();
-            this.velocityY += _GRAVITY;
-            this.currentHeight = this._PLAYERSPAWNHEIGHT += this.velocityY;
-            this.entityState = "jump"
-        }
+            _ELEMENTS._COOLDOWN_ELEMENT.innerHTML = Math.ceil(this.skillCooldownT/1000)
 
-        if (this.currentHeight > this._PLAYERSPAWNHEIGHT){
+            this.skillCooldownT -= delta;
 
-            this.currentHeight = this._PLAYERSPAWNHEIGHT;
-            this.velocityY = 0;
-            this.isJumping = false;
-            
+        }else{
+            _ELEMENTS._COOLDOWN_ELEMENT.innerHTML = ""
+            this.skillCooldownT = 0;
         }
         
-    }
 
-    horizontalMovement(delta, keysDown){
+        /************************
+         *  Deals with jumping  *
+         ************************/ 
 
-        if (KEYS._MOVELEFT in this.movement.keysDown) {
-            // move left
+        if (this.boomPlaying) return;
+ 
+        if (keysDown[KEYS._JUMP] && !this.isJumping) {
+            this.jump();
         }
-        if (KEYS._MOVERIGHT in this.movement.keysDown) {
-            // move right
+ 
+        if (this.isJumping) {
+            this.velocityY -= _GRAVITY;
+            this.currentHeight += this.velocityY;
+        }
+ 
+        if (this.currentHeight <= this._GROUND_HEIGHT) {
+            this.currentHeight = this._GROUND_HEIGHT;
+            this.velocityY = 0;
+            this.isJumping = false;
+        }
+ 
+        if (this.isJumping && !keysDown[KEYS._MOVERIGHT]) {
+            if (this.velocityY > 0) {
+                this.entityState = "jump";
+            } else {
+                this.entityState = "fall";
+            }
+        } else if(!keysDown[KEYS._MOVERIGHT]){
+
+            this.entityState = "run"
+
         }
 
-    }
+        /*************************
+         *  Deals with teleport  *
+         *************************/
 
+        //try to make a animation repeat atleast once
+
+        if (this.skillCooldownT <= 0){
+
+            this.skillCooldown = false
+            this.skillCooldownT = _SKILLCOOLDOWNT
+        }
+
+        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0 && this.skillCooldown === false) {
+
+            this.entityState = "boom"
+            this.boomPlaying = true
+            this.skillCooldown = true
+            this.distanceFromSide = 1000
+
+        }else if(this.distanceFromSide !=0){
+
+            this.distanceFromSide -= 8
+
+        }else if(this.distanceFromSide < 0){
+
+            this.distanceFromSide = 0
+
+        }
+ 
+    }
+ 
 }
