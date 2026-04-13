@@ -41,7 +41,7 @@ export class game {
  
         this.playerCharacter.update(delta, this.movement.getKeysArray(), this._ANIMATION._ANIMATION_STATE);
  
-        this._ANIMATION.animate();
+        this._ANIMATION.animate(this.playerCharacter.entityState,this.playerCharacter.boomPlaying);
         this._BACKGROUND.animateBackground(this.playerCharacter.moveBackground)
  
         requestAnimationFrame((timestamp) => this.loop(timestamp));

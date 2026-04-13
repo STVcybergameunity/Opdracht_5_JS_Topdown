@@ -20,6 +20,7 @@ export class player{
         this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
         this.currentHeight = this._GROUND_HEIGHT;
         this.moveBackground = false
+        this.boomPlaying = false;
 
     }
 
@@ -33,12 +34,19 @@ export class player{
         }
 
     }
+
+    onBoomComplete() {
+        this.boomPlaying = false;
+        this.entityState = "run"
+    }
  
     update(delta, keysDown, _ANIMATION_STATE) {
 
         /************************
          *  Deals with jumping  *
-         ************************/
+         ************************/ 
+
+        if (this.boomPlaying) return;
  
         if (keysDown[KEYS._JUMP] && !this.isJumping) {
             this.jump();
@@ -70,16 +78,18 @@ export class player{
         /*************************
          *  Deals with teleport  *
          *************************/
-        const animation = _ANIMATION_STATE;
+
+        //try to make a animation repeat atleast once
 
         if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0) {
 
             this.entityState = "boom"
+
+            this.boomPlaying = true
             
             this.distanceFromSide = 1000
 
-        }
-        else if(this.distanceFromSide !=0){
+        }else if(this.distanceFromSide !=0){
 
             this.distanceFromSide -= 8
 

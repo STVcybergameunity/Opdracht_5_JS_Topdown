@@ -49,24 +49,50 @@ export class animation {
 
     }
 
-    animate() {
+    animate(entityState,boomPlaying) {
 
         const _SPRITE_WIDTH = PlayerSize._WIDTH;
         const _SPRITE_HEIGHT = PlayerSize._HEIGHT;
 
-
         if (!this.initialize) {
+
             this.initializeAnimation();
+
         }
+
+        if (this.lastEntityState !== entityState) {
+
+            this.gameFrame = 0;
+            this.lastEntityState = entityState;
+            
+        }
+
+        const animateFrame = Math.floor(this.gameFrame / this._STAGGER_FRAMES)
 
         this.canvas._CTX.clearRect(0, 0, this.canvas._CANVAS_WIDTH, this.canvas._CANVAS_HEIGHT);
 
-        const state = this.playerCharacter.entityState;
+        const state = entityState;
+
         const spriteFrames = this._SPRITE_ANIMATION[state];
 
-        if (!spriteFrames) return; // guard against unknown states
+        if (!spriteFrames) return;
 
-        this.position = Math.floor(this.gameFrame / this._STAGGER_FRAMES) % spriteFrames.loc.length;
+        const lastFrame = spriteFrames.loc.length - 1;
+
+        if (entityState === 'boom') {
+
+            this.position = Math.min(animateFrame, lastFrame);
+
+            console.log("State: " + entityState,"Position: " + this.position,"Last frame: " + lastFrame)
+ 
+            if (this.position === lastFrame && boomPlaying) {
+                this.playerCharacter.onBoomComplete();
+            }
+        }   else {
+
+            this.position = animateFrame % spriteFrames.loc.length;
+
+        }
 
         this.frameX = _SPRITE_WIDTH * this.position;
         this.frameY = spriteFrames.loc[this.position].y;

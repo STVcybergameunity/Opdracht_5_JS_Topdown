@@ -13,10 +13,6 @@ export const KEYS ={
 
 export const _GRAVITY = 1
 
-export const PlayerAnimations = {
-
-}
-
 /*****************************************
  * Allows you to input the location of   *
  * the correct image of the sprite sheet *
@@ -74,5 +70,8 @@ export const spriteAnimations = {
     },
     "getHit": {
         loc: getSpriteLoc(4,9)
+    },
+    "boom": {
+        loc: getSpriteLoc(5,10)
     },
 }
