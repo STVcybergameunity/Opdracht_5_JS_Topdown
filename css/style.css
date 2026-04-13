@@ -63,6 +63,27 @@
 
 }
 
+.feedback{
+
+    display: none;
+    position: absolute;
+    grid-template-columns: 0fr 0fr 0fr;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 15%;
+    font-size: 3dvh;
+    z-index: 3;
+
+}
+
+.cooldown{
+
+    font-size: 50px;
+    font-weight: bolder;
+
+}
+
+
 #start {
 
     position: absolute;

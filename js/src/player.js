@@ -1,5 +1,5 @@
 import { animation } from "./animation.js";
-import { PlayerSize, KEYS, _GRAVITY } from "./constants.js";
+import { PlayerSize, KEYS, _GRAVITY, _SKILLCOOLDOWNT, _ELEMENTS } from "./constants.js";
 export class player{
 
     constructor(movementInstance){
@@ -9,6 +9,7 @@ export class player{
         this._DRAW_HEIGHT = PlayerSize._HEIGHT*0.5;
         this._PLAYERIMAGE = new Image();
 
+        this.skillCooldownT = _SKILLCOOLDOWNT; // ms
         this.gameFrame = 0;
         this.movement = movementInstance
         this.animationTimer = 0;
@@ -19,8 +20,8 @@ export class player{
         this.currentHeight = this._PLAYERSPAWNHEIGHT
         this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
         this.currentHeight = this._GROUND_HEIGHT;
-        this.moveBackground = false
         this.boomPlaying = false;
+        this.skillCooldown = false
 
     }
 
@@ -41,6 +42,18 @@ export class player{
     }
  
     update(delta, keysDown, _ANIMATION_STATE) {
+
+        if (this.skillCooldown && this.skillCooldownT > 0){
+
+            _ELEMENTS._COOLDOWN_ELEMENT.innerHTML = Math.ceil(this.skillCooldownT/1000)
+
+            this.skillCooldownT -= delta;
+
+        }else{
+            _ELEMENTS._COOLDOWN_ELEMENT.innerHTML = ""
+            this.skillCooldownT = 0;
+        }
+        
 
         /************************
          *  Deals with jumping  *
@@ -81,12 +94,17 @@ export class player{
 
         //try to make a animation repeat atleast once
 
-        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0) {
+        if (this.skillCooldownT <= 0){
+
+            this.skillCooldown = false
+            this.skillCooldownT = _SKILLCOOLDOWNT
+        }
+
+        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0 && this.skillCooldown === false) {
 
             this.entityState = "boom"
-
             this.boomPlaying = true
-            
+            this.skillCooldown = true
             this.distanceFromSide = 1000
 
         }else if(this.distanceFromSide !=0){

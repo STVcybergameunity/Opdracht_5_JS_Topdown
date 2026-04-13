@@ -1,16 +1,10 @@
+import { _ELEMENTS } from './constants.js';
 
 export class menus{
     
     
 
-    constructor(){
-
-        this._START_SCREEN_ELEMENT = document.querySelector("header");
-        this._GAME_SCREEN_ELEMENT = document.querySelector("main");
-        this._GAME_CANVAS_ELEMENT = document.querySelector("#game");
-        this._SCORE_SCREEN_ELEMENT = document.querySelector(".score");
-        this._AMMO_ELEMENT = document.querySelector(".ammo");
-        this._BACKGROUND_ELEMENT = document.querySelector("#background")
+    constructor() {
 
         this._GAME_STARTED = false;
 
@@ -52,12 +46,13 @@ export class menus{
 
     startGame() {
 
-        this._START_SCREEN_ELEMENT.style.display = "none";
-        this._GAME_SCREEN_ELEMENT.style.display = "grid";
-        this._SCORE_SCREEN_ELEMENT.style.display = "grid"
-        this._GAME_CANVAS_ELEMENT.style.display = "flex"
-        this._BACKGROUND_ELEMENT.style.display = "flex"
-        this._AMMO_ELEMENT.style.display = "flex"
+        _ELEMENTS._START_SCREEN_ELEMENT.style.display = "none";
+        _ELEMENTS._GAME_SCREEN_ELEMENT.style.display = "grid";
+        _ELEMENTS._SCORE_SCREEN_ELEMENT.style.display = "grid"
+        _ELEMENTS._GAME_CANVAS_ELEMENT.style.display = "flex"
+        _ELEMENTS._BACKGROUND_ELEMENT.style.display = "flex"
+        _ELEMENTS._AMMO_ELEMENT.style.display = "flex"
+        _ELEMENTS._COOLDOWN_ELEMENT.style.display = "flex"
 
     }
 

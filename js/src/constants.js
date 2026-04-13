@@ -12,6 +12,17 @@ export const KEYS ={
 }
 
 export const _GRAVITY = 1
+export const _SKILLCOOLDOWNT = 5000;
+
+export const _ELEMENTS = {
+    _COOLDOWN_ELEMENT: document.querySelector(".feedback"),
+    _START_SCREEN_ELEMENT: document.querySelector("header"),
+    _GAME_SCREEN_ELEMENT: document.querySelector("main"),
+    _GAME_CANVAS_ELEMENT: document.querySelector("#game"),
+    _SCORE_SCREEN_ELEMENT: document.querySelector(".score"),
+    _AMMO_ELEMENT: document.querySelector(".ammo"),
+    _BACKGROUND_ELEMENT: document.querySelector("#background")
+}
 
 /*****************************************
  * Allows you to input the location of   *
@@ -20,6 +31,11 @@ export const _GRAVITY = 1
 export const PlayerSize = {
     _WIDTH: 575,
     _HEIGHT: 523
+}
+
+export const EnemySize = {
+    _ENEMY_WIDTH: 266,
+    _ENEMY_HEIGHT: 188
 }
 
 function getSpriteLoc(amountOfFrames, spritesheet_row, startFrame = 0){
