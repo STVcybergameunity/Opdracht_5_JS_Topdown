@@ -1,7 +1,8 @@
 import { canvas } from "./canvas.js";
 import { player } from "./player.js";
-import { spriteAnimations, KEYS, PlayerSize } from './constants.js'
-import { movement } from "./movement.js";
+import { enemy } from "./enemy.js";
+import { spriteAnimations, KEYS, PlayerSize, Enemy } from './constants.js'
+import { movement } from "./parser.js";
 
 export class animation {
 
@@ -9,7 +10,7 @@ export class animation {
 
         this.gameFrame = 0;
         this._STAGGER_FRAMES = 5;
-        this._ARRAY_STATE = ['getHit', 'idle', 'jump', 'fall', 'run', 'dizzy', 'sit', 'roll', 'bite', 'ko', 'boom'];
+        this._ARRAY_STATE = ['getHit', 'idle', 'jump', 'fall', 'run', 'dizzy', 'sit', 'roll', 'bite', 'ko', 'boom', 'enemy'];
         this._SPRITE_ANIMATION = [];
         this._ANIMATION_STATE = [
             { name: 'idle',   frames: 7  },
@@ -22,7 +23,8 @@ export class animation {
             { name: 'bite',   frames: 7  },
             { name: 'ko',     frames: 12 },
             { name: 'getHit', frames: 4  },
-            { name: 'boom',   frames: 5  }
+            { name: 'boom',   frames: 5  },
+            { name: 'enemy',  frames: 9  },
         ];
 
     }
@@ -106,6 +108,10 @@ export class animation {
         this.playerCharacter._DRAW_WIDTH,
         this.playerCharacter._DRAW_HEIGHT
         );
+
+        // this.canvas._CTX.drawImage(
+        //     Enemy._ENEMY_IMG
+        // )
 
         this.gameFrame++;
 

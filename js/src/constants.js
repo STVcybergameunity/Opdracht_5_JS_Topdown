@@ -33,9 +33,11 @@ export const PlayerSize = {
     _HEIGHT: 523
 }
 
-export const EnemySize = {
+export const Enemy = {
     _ENEMY_WIDTH: 266,
-    _ENEMY_HEIGHT: 188
+    _ENEMY_HEIGHT: 188,
+    _ENEMY_IMG: 'img/enemy4.png',
+    _ENTITY_STATE_ENEMY: 'enemy'
 }
 
 function getSpriteLoc(amountOfFrames, spritesheet_row, startFrame = 0){

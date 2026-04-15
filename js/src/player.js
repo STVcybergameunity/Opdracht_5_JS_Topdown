@@ -1,4 +1,5 @@
 import { animation } from "./animation.js";
+import { menus } from "./menus.js";
 import { PlayerSize, KEYS, _GRAVITY, _SKILLCOOLDOWNT, _ELEMENTS } from "./constants.js";
 export class player{
 
@@ -7,7 +8,7 @@ export class player{
         this.entityState = "run";
         this._DRAW_WIDTH = PlayerSize._WIDTH*0.5;
         this._DRAW_HEIGHT = PlayerSize._HEIGHT*0.5;
-        this._PLAYERIMAGE = new Image();
+        this._PLAYERIMAGE = new Image()
 
         this.skillCooldownT = _SKILLCOOLDOWNT; // ms
         this.gameFrame = 0;
@@ -76,13 +77,13 @@ export class player{
             this.isJumping = false;
         }
  
-        if (this.isJumping && !keysDown[KEYS._MOVERIGHT]) {
+        if (this.isJumping) {
             if (this.velocityY > 0) {
                 this.entityState = "jump";
             } else {
                 this.entityState = "fall";
             }
-        } else if(!keysDown[KEYS._MOVERIGHT]){
+        } else {
 
             this.entityState = "run"
 

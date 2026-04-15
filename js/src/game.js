@@ -4,7 +4,7 @@ import { animation } from "./animation.js";
 import { player } from "./player.js";
 import { canvas } from "./canvas.js";
 import { background } from "./background.js";
-import { movement } from "./movement.js";
+import { movement } from "./parser.js";
 // import { shoot } from "./shoot.js";
  
 export class game {
