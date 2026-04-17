@@ -6,23 +6,23 @@ export class player{
     constructor(movementInstance){
 
         this.entityState = "run";
-        this._DRAW_WIDTH = PlayerSize._WIDTH*0.5;
-        this._DRAW_HEIGHT = PlayerSize._HEIGHT*0.5;
-        this._PLAYERIMAGE = new Image()
+        this._DRAW_WIDTH = PlayerSize._WIDTH * 0.5;
+        this._DRAW_HEIGHT = PlayerSize._HEIGHT * 0.5;
+        this._PLAYERIMAGE = new Image();
+        this._PLAYERSPAWNHEIGHT = this._DRAW_HEIGHT * 1.5;
 
         this.skillCooldownT = _SKILLCOOLDOWNT;
         this.gameFrame = 0;
-        this.movement = movementInstance
+        this.movement = movementInstance;
         this.animationTimer = 0;
         this.animationInterval = 200;
         this.velocityY = 0;
-        this.distanceFromSide = 0
-        this.isJumping = false
-        this.currentHeight = this._PLAYERSPAWNHEIGHT
+        this.distanceFromSide = 0;
+        this.isJumping = false;
         this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
         this.currentHeight = this._GROUND_HEIGHT;
         this.boomPlaying = false;
-        this.skillCooldown = false
+        this.skillCooldown = false;
 
     }
 

@@ -1,4 +1,3 @@
-
 import { canvas } from "./canvas.js";
 
 export class background{

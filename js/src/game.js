@@ -18,9 +18,9 @@ export class game {
         this.movement = new movement();
         this.playerCharacter = new player(this.movement);
         this._CANVAS = new canvas();
-        this._ANIMATION = new animation();
+        this._ANIMATION = new animation(this._CANVAS, this.playerCharacter);
         this._BACKGROUND = new background(this._CANVAS, null, 1);
-        this._ENEMIES = this.generate_enemies(4, this._CANVAS)
+        this._ENEMIES = this.generate_enemies(4, this._CANVAS);
         this.lastTime = 0;
  
     }
@@ -28,8 +28,6 @@ export class game {
     Play() {
  
         this._MENUS.buttonClick();
-        this._ANIMATION.playerCharacter = this.playerCharacter;
-        this._ANIMATION.canvas = this._CANVAS;
         this._BACKGROUND.animateBackground();
 
         requestAnimationFrame((timestamp) => this.loop(timestamp));
@@ -41,17 +39,21 @@ export class game {
         if (!this.lastTime) this.lastTime = timestamp;
         const delta = timestamp - this.lastTime;
         this.lastTime = timestamp;
- 
-        this.playerCharacter.update(delta, this.movement.getKeysArray(), this._ANIMATION._ANIMATION_STATE);
- 
-        this._ANIMATION.animate(this.playerCharacter.entityState,this.playerCharacter.boomPlaying);
-        this._BACKGROUND.animateBackground(this.playerCharacter.moveBackground);
 
-        //make it happen when the game started not instandly
-        this._ENEMIES.forEach((enemy)=>{
-            enemy.enemy_Update();
-            enemy.enemy_Draw();
-        })
+        this._BACKGROUND.animateBackground();
+
+        if (this._MENUS._GAME_STARTED){
+ 
+            this.playerCharacter.update(delta, this.movement.getKeysArray(), this._ANIMATION._ANIMATION_STATE);
+    
+            this._ANIMATION.animate(this.playerCharacter.entityState, this.playerCharacter.boomPlaying);
+
+            this._ENEMIES.forEach((enemy) => {
+                enemy.enemy_Update();
+                enemy.enemy_Draw();
+            });
+
+        }
  
         requestAnimationFrame((timestamp) => this.loop(timestamp));
  

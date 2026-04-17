@@ -43,7 +43,7 @@ function getSpriteLoc(amountOfFrames, spritesheet_row, startFrame = 0){
     for (let i = 0 + startFrame;i<=amountOfFrames;i++){
         returnarr[i]={
             x: PlayerSize._WIDTH*i,
-            y: PlayerSize._WIDTH*spritesheet_row
+            y: PlayerSize._HEIGHT*spritesheet_row
         };
     }
     return returnarr;
@@ -61,12 +61,9 @@ export const spriteAnimations = {
         loc: getSpriteLoc(7,1)
     },
     "fall": {
-        loc: getSpriteLoc(7,1,3)
-    },
-    "run": {
         loc: getSpriteLoc(7,2)
     },
-    "fall": {
+    "run": {
         loc: getSpriteLoc(7,3)
     },
     "dizzy": {

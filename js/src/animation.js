@@ -6,8 +6,10 @@ import { movement } from "./parser.js";
 
 export class animation {
 
-    constructor() {
+    constructor(canvasInstance, playerCharacter) {
 
+        this.canvas = canvasInstance;
+        this.playerCharacter = playerCharacter;
         this.gameFrame = 0;
         this._STAGGER_FRAMES = 5;
         this._SPRITE_ANIMATION = [];
