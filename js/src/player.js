@@ -10,7 +10,7 @@ export class player{
         this._DRAW_HEIGHT = PlayerSize._HEIGHT*0.5;
         this._PLAYERIMAGE = new Image()
 
-        this.skillCooldownT = _SKILLCOOLDOWNT; // ms
+        this.skillCooldownT = _SKILLCOOLDOWNT;
         this.gameFrame = 0;
         this.movement = movementInstance
         this.animationTimer = 0;
@@ -69,6 +69,12 @@ export class player{
         if (this.isJumping) {
             this.velocityY -= _GRAVITY;
             this.currentHeight += this.velocityY;
+        }
+
+        if (this.isJumping && keysDown[KEYS._MOVEDOWN] && this.velocityY > 0){
+
+            this.velocityY = 0
+
         }
  
         if (this.currentHeight <= this._GROUND_HEIGHT) {

@@ -1,8 +1,6 @@
-
-import { player } from "./player.js";
 export const KEYS ={
     
-    _MOVELEFT: "A",
+    _MOVEDOWN: "S",
     _MOVERIGHT: "D",
     _JUMP: "Space",
     _CHANGE: "Shift",
@@ -34,8 +32,8 @@ export const PlayerSize = {
 }
 
 export const Enemy = {
-    _ENEMY_WIDTH: 266,
-    _ENEMY_HEIGHT: 188,
+    _ENEMY_WIDTH: 213,
+    _ENEMY_HEIGHT: 212,
     _ENEMY_IMG: 'img/enemy4.png',
     _ENTITY_STATE_ENEMY: 'enemy'
 }

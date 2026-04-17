@@ -5,8 +5,11 @@ import { player } from "./player.js";
 import { canvas } from "./canvas.js";
 import { background } from "./background.js";
 import { movement } from "./parser.js";
+import { enemy } from "./enemy.js";
+
 // import { shoot } from "./shoot.js";
  
+
 export class game {
  
     constructor() {
@@ -17,7 +20,7 @@ export class game {
         this._CANVAS = new canvas();
         this._ANIMATION = new animation();
         this._BACKGROUND = new background(this._CANVAS, null, 1);
-        this.loopID = null;
+        this._ENEMIES = this.generate_enemies(4, this._CANVAS)
         this.lastTime = 0;
  
     }
@@ -42,7 +45,13 @@ export class game {
         this.playerCharacter.update(delta, this.movement.getKeysArray(), this._ANIMATION._ANIMATION_STATE);
  
         this._ANIMATION.animate(this.playerCharacter.entityState,this.playerCharacter.boomPlaying);
-        this._BACKGROUND.animateBackground(this.playerCharacter.moveBackground)
+        this._BACKGROUND.animateBackground(this.playerCharacter.moveBackground);
+
+        //make it happen when the game started not instandly
+        this._ENEMIES.forEach((enemy)=>{
+            enemy.enemy_Update();
+            enemy.enemy_Draw();
+        })
  
         requestAnimationFrame((timestamp) => this.loop(timestamp));
  
@@ -52,5 +61,14 @@ export class game {
  
         window.game = this;
  
+    }
+
+    generate_enemies(enemies, ctx){
+        const _ARRAY_OF_ENEMIES = [];
+
+        for (let i = 0; i < enemies; i++){
+            _ARRAY_OF_ENEMIES.push(new enemy(ctx))
+        }
+        return _ARRAY_OF_ENEMIES;
     }
 }

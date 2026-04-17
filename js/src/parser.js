@@ -37,8 +37,8 @@ export class movement{
 
         switch(key) {
 
-            case 'KeyA':
-                return KEYS._MOVELEFT;
+            case 'KeyS':
+                return KEYS._MOVEDOWN;
             case 'KeyD':
                 return KEYS._MOVERIGHT;
             case 'Space':
