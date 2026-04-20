@@ -1,13 +1,15 @@
 import { animation } from "./animation.js";
 import { menus } from "./menus.js";
 import { PlayerSize, KEYS, _GRAVITY, _SKILLCOOLDOWNT, _ELEMENTS } from "./constants.js";
+import { hitdetection } from "./hitdetection.js";
 export class player{
 
     constructor(movementInstance){
 
         this.entityState = "run";
-        this._DRAW_WIDTH = PlayerSize._WIDTH * 0.5;
-        this._DRAW_HEIGHT = PlayerSize._HEIGHT * 0.5;
+        this.size_multiplier = 0.5
+        this._DRAW_WIDTH = PlayerSize._WIDTH * this.size_multiplier;
+        this._DRAW_HEIGHT = PlayerSize._HEIGHT * this.size_multiplier;
         this._PLAYERIMAGE = new Image();
         this._PLAYERSPAWNHEIGHT = this._DRAW_HEIGHT * 1.5;
 
@@ -40,9 +42,12 @@ export class player{
     onBoomComplete() {
         this.boomPlaying = false;
         this.entityState = "run"
+        if (this.velocityY > 0){
+            this.velocityY = 0
+        }
     }
  
-    update(delta, keysDown, _ANIMATION_STATE) {
+    update(delta, keysDown, _ANIMATION_STATE, playerHit) {
 
         if (this.skillCooldown && this.skillCooldownT > 0){
 
@@ -54,7 +59,9 @@ export class player{
             _ELEMENTS._COOLDOWN_ELEMENT.innerHTML = ""
             this.skillCooldownT = 0;
         }
-        
+
+        if (playerHit)
+            this.entityState = "ko";
 
         /************************
          *  Deals with jumping  *
@@ -62,9 +69,8 @@ export class player{
 
         if (this.boomPlaying) return;
  
-        if (keysDown[KEYS._JUMP] && !this.isJumping) {
+        if (keysDown[KEYS._JUMP] && !this.isJumping) 
             this.jump();
-        }
  
         if (this.isJumping) {
             this.velocityY -= _GRAVITY;
@@ -114,11 +120,21 @@ export class player{
             this.skillCooldown = true
             this.distanceFromSide = 1000
 
-        }else if(this.distanceFromSide !=0){
+        }
+
+        if(this.distanceFromSide !=0 && this.isJumping){
+
+            this.distanceFromSide += 4
+
+        }
+
+        if (this.distanceFromSide !=0 && !this.isJumping){
 
             this.distanceFromSide -= 8
 
-        }else if(this.distanceFromSide < 0){
+        }
+
+        if(this.distanceFromSide < 0){
 
             this.distanceFromSide = 0
 

@@ -38,6 +38,11 @@ export const Enemy = {
     _ENTITY_STATE_ENEMY: 'enemy'
 }
 
+export const HitDetection = {
+    _PLAYER_DIAMETER: 150,
+    _ENEMY_DIAMETER:  100,
+}
+
 function getSpriteLoc(amountOfFrames, spritesheet_row, startFrame = 0){
     let returnarr = [];
     for (let i = 0 + startFrame;i<=amountOfFrames;i++){
