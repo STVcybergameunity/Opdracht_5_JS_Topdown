@@ -6,6 +6,7 @@ export const KEYS ={
     _CHANGE: "Shift",
     _ATTACK:  0,
     _PAUSE: "Escape",
+    _MOVELEFT: "A"
 
 }
 

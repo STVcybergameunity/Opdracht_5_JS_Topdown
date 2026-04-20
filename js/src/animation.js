@@ -52,7 +52,7 @@ export class animation {
 
     }
 
-    animate(entityState,boomPlaying) {
+    animate(entityState) {
 
         const _SPRITE_WIDTH = PlayerSize._WIDTH;
         const _SPRITE_HEIGHT = PlayerSize._HEIGHT;
@@ -83,16 +83,16 @@ export class animation {
 
         const lastFrame = spriteFrames.loc.length - 1;
 
-        if (entityState === 'boom') {
+        const isOneShot = this.playerCharacter.oneShotAnimations.has(entityState);
+
+        if (isOneShot) {
 
             this.position = Math.min(animateFrame, lastFrame);
-
-            console.log("State: " + entityState,"Position: " + this.position,"Last frame: " + lastFrame)
  
-            if (this.position === lastFrame && boomPlaying) {
-                this.playerCharacter.onBoomComplete();
+            if (this.position === lastFrame) {
+                this.playerCharacter.onOneShotComplete(entityState);
             }
-        }   else {
+        } else {
 
             this.position = animateFrame % spriteFrames.loc.length;
 

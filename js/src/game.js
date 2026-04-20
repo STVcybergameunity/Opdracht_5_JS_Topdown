@@ -50,7 +50,7 @@ export class game {
 
             this.playerCharacter.update(delta, this.movement.getKeysArray(), this._ANIMATION._ANIMATION_STATE, playerHit);
     
-            this._ANIMATION.animate(this.playerCharacter.entityState, this.playerCharacter.boomPlaying);
+            this._ANIMATION.animate(this.playerCharacter.entityState);
 
             this._ENEMIES.forEach((enemy) => {
                 enemy.enemy_Update();

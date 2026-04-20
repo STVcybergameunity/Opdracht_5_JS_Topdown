@@ -41,6 +41,8 @@ export class movement{
                 return KEYS._MOVEDOWN;
             case 'KeyD':
                 return KEYS._MOVERIGHT;
+            case 'KeyA':
+                return KEYS._MOVELEFT;
             case 'Space':
                 return KEYS._JUMP;
             case 'ShiftLeft':

@@ -23,8 +23,9 @@ export class player{
         this.isJumping = false;
         this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
         this.currentHeight = this._GROUND_HEIGHT;
-        this.boomPlaying = false;
+        this.boomActive = false;
         this.skillCooldown = false;
+        this.oneShotAnimations = new Set(['boom', 'ko']);
 
     }
 
@@ -39,11 +40,15 @@ export class player{
 
     }
 
-    onBoomComplete() {
-        this.boomPlaying = false;
-        this.entityState = "run"
-        if (this.velocityY > 0){
-            this.velocityY = 0
+    onOneShotComplete(animationName) {
+        if (animationName === 'boom') {
+            this.boomActive = false;
+            this.entityState = "run";
+            if (this.velocityY > 0) {
+                this.velocityY = 0;
+            }
+        } else if (animationName === 'ko') {
+
         }
     }
  
@@ -60,14 +65,16 @@ export class player{
             this.skillCooldownT = 0;
         }
 
-        if (playerHit)
-            this.entityState = "ko";
+        if (playerHit && !this.boomActive){
+            this.playOneShot('ko');
+            this.currentHeight = this._GROUND_HEIGHT
+        }
 
         /************************
          *  Deals with jumping  *
          ************************/ 
 
-        if (this.boomPlaying) return;
+        if (this.boomActive) return;
  
         if (keysDown[KEYS._JUMP] && !this.isJumping) 
             this.jump();
@@ -113,26 +120,26 @@ export class player{
             this.skillCooldownT = _SKILLCOOLDOWNT
         }
 
-        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0 && this.skillCooldown === false) {
+        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide < 500 && this.skillCooldown === false) {
 
-            this.entityState = "boom"
-            this.boomPlaying = true
             this.skillCooldown = true
             this.distanceFromSide = 1000
+            this.playOneShot('boom');
 
         }
 
-        if(this.distanceFromSide !=0 && this.isJumping){
+        if(this.isJumping){
 
             this.distanceFromSide += 4
 
         }
 
-        if (this.distanceFromSide !=0 && !this.isJumping){
+        if (this.distanceFromSide !=0 && !this.isJumping && keysDown[KEYS._MOVELEFT]){
 
+            this.distanceFromSide -= 16
+
+        }else if(this.distanceFromSide !=0 && !this.isJumping)
             this.distanceFromSide -= 8
-
-        }
 
         if(this.distanceFromSide < 0){
 
@@ -140,6 +147,10 @@ export class player{
 
         }
  
+    }
+    playOneShot(animationName) {
+        this.boomActive = true;
+        this.entityState = animationName;
     }
  
 }
