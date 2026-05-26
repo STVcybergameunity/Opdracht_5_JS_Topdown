@@ -1,8 +1,9 @@
-# <u> This is a game I made for school in JS.</u>
+# <u> This is a game I made for school in JS.
+## Controls : D = teleport, S = dive to floor, A = run back, space = jump</u>
 
-## Node version: v24.14.0.
+### Node version: v24.14.0.
 
-# <u> **Install**</u>
+# **Install**</u>
 
 ~~~
 https://github.com/STVcybergameunity/Opdracht_5_JS_Topdown.git
