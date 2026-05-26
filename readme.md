@@ -1,5 +1,5 @@
-# <u> This is a game I made for school in JS.
-## Controls : D = teleport, S = dive to floor, A = run back, space = jump</u>
+# This is a game I made for school in JS.
+## <u>Controls : D = teleport, S = dive to floor, A = run back, space = jump</u>
 
 ### Node version: v24.14.0.
 
