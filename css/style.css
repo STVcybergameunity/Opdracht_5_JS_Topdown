@@ -149,3 +149,6 @@ header {
     bottom: 2%;
 
 }
+.controls {
+    z-index: 10;
+}

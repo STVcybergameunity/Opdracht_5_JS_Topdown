@@ -18,9 +18,9 @@ export class game {
         this.playerCharacter = new player(this.movement);
         this._CANVAS = new canvas();
         this._ANIMATION = new animation(this._CANVAS, this.playerCharacter);
-        this._BACKGROUND = new background(this._CANVAS, null, 1);
         this._ENEMIES = this.generate_enemies(4, this._CANVAS);
         this._HITDETECTION = new hitdetection(this.playerCharacter, this._ENEMIES, this._CANVAS);
+        this._BACKGROUND = new background(this._CANVAS, null, 1);
         this.lastTime = 0;
         this.score = 0;
         this.scoreTimer = 0;
@@ -43,10 +43,11 @@ export class game {
         const delta = timestamp - this.lastTime;
         this.lastTime = timestamp;
 
-        this._BACKGROUND.animateBackground();
+        let playerHit = this._HITDETECTION.checkHits();
+
+        this._BACKGROUND.animateBackground(playerHit);
 
         if (this._MENUS._GAME_STARTED){
-            let playerHit = this._HITDETECTION.checkHits();
 
             this.playerCharacter.update(delta, this.movement.getKeysArray(), this._ANIMATION._ANIMATION_STATE, playerHit);
     

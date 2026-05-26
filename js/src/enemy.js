@@ -13,7 +13,7 @@ export class enemy {
         this.enemyImage.src = 'img/enemy4.png'
 
         this.speedMultiplier = 10
-        this.speed = Math.random() * this.speedMultiplier + 10;
+        this.speed = Math.random() * this.speedMultiplier + 5;
         this.sizeMultiplier = 1
 
         this.width = Enemy._ENEMY_WIDTH * this.sizeMultiplier;
@@ -27,7 +27,7 @@ export class enemy {
         this.curve = Math.random() * 20;
 
         this.flapSpeed = Math.floor(Math.random() * 3 + 1);
-        this.angleSpeed = Math.random() * 0.2;
+        this.angleSpeed = Math.random() * 0.1;
         this.gameFrame = 0;
 
     }

@@ -112,8 +112,6 @@ export class player{
          *  Deals with teleport  *
          *************************/
 
-        //try to make a animation repeat atleast once
-
         if (this.skillCooldownT <= 0){
 
             this.skillCooldown = false
@@ -148,9 +146,12 @@ export class player{
         }
  
     }
+
     playOneShot(animationName) {
+
         this.boomActive = true;
         this.entityState = animationName;
+        
     }
  
 }

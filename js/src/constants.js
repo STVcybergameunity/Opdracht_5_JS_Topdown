@@ -14,6 +14,7 @@ export const _GRAVITY = 1
 export const _SKILLCOOLDOWNT = 5000;
 
 export const _ELEMENTS = {
+
     _COOLDOWN_ELEMENT: document.querySelector(".feedback"),
     _START_SCREEN_ELEMENT: document.querySelector("header"),
     _GAME_SCREEN_ELEMENT: document.querySelector("main"),
@@ -21,6 +22,7 @@ export const _ELEMENTS = {
     _SCORE_SCREEN_ELEMENT: document.querySelector(".score"),
     _AMMO_ELEMENT: document.querySelector(".ammo"),
     _BACKGROUND_ELEMENT: document.querySelector("#background")
+    
 }
 
 /*****************************************

@@ -7,44 +7,8 @@ export class hitdetection {
         this.playerCharacter = playerCharacter;
         this.enemies = enemies;
         this.canvas = canvasInstance;
-        this.showHitboxes = false; // toggle this to hide/show hitboxes
+        this.showHitboxes = true; // toggle this to hide/show hitboxes
         this.gotHit = false;
-    }
-
-    drawHitboxes(playerCircle, hitEnemies) {
-
-        const ctx = this.canvas._CTX;
-
-        ctx.beginPath();
-        ctx.arc(
-            playerCircle.x,
-            playerCircle.y,
-            playerCircle.diameter / 2,
-            0,
-            Math.PI * 2
-        );
-        ctx.strokeStyle = hitEnemies.length > 0 ? "red" : "lime";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        this.enemies.forEach(enemy => {
-
-            const isThisEnemyHit = hitEnemies.includes(enemy);
-
-            ctx.beginPath();
-            ctx.arc(
-                enemy.x + (enemy.width / 2),
-                enemy.y + (enemy.height / 2),
-                HitDetection._ENEMY_DIAMETER / 2,
-                0,
-                Math.PI * 2
-            );
-            ctx.strokeStyle = isThisEnemyHit ? "red" : "lime";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-        });
-
     }
 
     isHit(player, enemy) {
@@ -97,6 +61,42 @@ export class hitdetection {
 
     }
 
+    drawHitboxes(playerCircle, hitEnemies) {
+
+        const ctx = this.canvas._CTX;
+
+        ctx.beginPath();
+        ctx.arc(
+            playerCircle.x,
+            playerCircle.y,
+            playerCircle.diameter / 2,
+            0,
+            Math.PI * 2
+        );
+        ctx.strokeStyle = hitEnemies.length > 0 ? "red" : "lime";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        this.enemies.forEach(enemy => {
+
+            const isThisEnemyHit = hitEnemies.includes(enemy);
+
+            ctx.beginPath();
+            ctx.arc(
+                enemy.x + (enemy.width / 2),
+                enemy.y + (enemy.height / 2),
+                HitDetection._ENEMY_DIAMETER / 2,
+                0,
+                Math.PI * 2
+            );
+            ctx.strokeStyle = isThisEnemyHit ? "red" : "lime";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+        });
+
+    }
+
     checkEnemies(enemy) {
 
         const enemyCircle = {
@@ -111,8 +111,6 @@ export class hitdetection {
             this.gotHit = true;
             return true;
             // return (this.gotHit = true)
-        }else if (this.gotHit){
-            return this.gotHit = false
         }
     }
 }
