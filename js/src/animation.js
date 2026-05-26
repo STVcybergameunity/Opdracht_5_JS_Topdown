@@ -1,15 +1,17 @@
 import { canvas } from "./canvas.js";
 import { player } from "./player.js";
-import { spriteAnimations, KEYS, PlayerSize } from './constants.js'
-import { movement } from "./movement.js";
+import { enemy } from "./enemy.js";
+import { spriteAnimations, KEYS, PlayerSize, Enemy } from './constants.js'
+import { movement } from "./parser.js";
 
 export class animation {
 
-    constructor() {
+    constructor(canvasInstance, playerCharacter) {
 
+        this.canvas = canvasInstance;
+        this.playerCharacter = playerCharacter;
         this.gameFrame = 0;
         this._STAGGER_FRAMES = 5;
-        this._ARRAY_STATE = ['getHit', 'idle', 'jump', 'fall', 'run', 'dizzy', 'sit', 'roll', 'bite', 'ko', 'boom'];
         this._SPRITE_ANIMATION = [];
         this._ANIMATION_STATE = [
             { name: 'idle',   frames: 7  },
@@ -22,14 +24,15 @@ export class animation {
             { name: 'bite',   frames: 7  },
             { name: 'ko',     frames: 12 },
             { name: 'getHit', frames: 4  },
-            { name: 'boom',   frames: 5  }
+            { name: 'boom',   frames: 5  },
+            { name: 'enemy',  frames: 9  },
         ];
 
     }
 
     initializeAnimation() {
 
-        this.playerCharacter._PLAYERIMAGE.src = 'img/shadow_dog_with_boom.png';
+        this.playerCharacter._PLAYERIMAGE.src = 'img/shadow_dog_with_boom.png'
 
         this._ANIMATION_STATE.forEach((state, index) => {
 
@@ -49,10 +52,11 @@ export class animation {
 
     }
 
-    animate(entityState,boomPlaying) {
+    animate(entityState) {
 
         const _SPRITE_WIDTH = PlayerSize._WIDTH;
         const _SPRITE_HEIGHT = PlayerSize._HEIGHT;
+        
 
         if (!this.initialize) {
 
@@ -79,32 +83,35 @@ export class animation {
 
         const lastFrame = spriteFrames.loc.length - 1;
 
-        if (entityState === 'boom') {
+        const isOneShot = this.playerCharacter.oneShotAnimations.has(entityState);
+
+        if (isOneShot) {
 
             this.position = Math.min(animateFrame, lastFrame);
-
-            console.log("State: " + entityState,"Position: " + this.position,"Last frame: " + lastFrame)
  
-            if (this.position === lastFrame && boomPlaying) {
-                this.playerCharacter.onBoomComplete();
+            if (this.position === lastFrame) {
+                this.playerCharacter.onOneShotComplete(entityState);
             }
-        }   else {
+        } else {
 
             this.position = animateFrame % spriteFrames.loc.length;
 
         }
 
-        this.frameX = _SPRITE_WIDTH * this.position;
-        this.frameY = spriteFrames.loc[this.position].y;
+
+        this.frameX = _SPRITE_WIDTH * this.position
+        this.frameY = spriteFrames.loc[this.position].y
+        this.frameXEnemy = Enemy._ENEMY_WIDTH * this.position
+        this.frameYEnemy =  spriteFrames.loc[this.position].y
 
         this.canvas._CTX.drawImage(
-        this.playerCharacter._PLAYERIMAGE,
-        this.frameX, this.frameY,
-        _SPRITE_WIDTH, _SPRITE_HEIGHT,
-        this.playerCharacter.distanceFromSide,
-        window.innerHeight - this.playerCharacter.currentHeight,
-        this.playerCharacter._DRAW_WIDTH,
-        this.playerCharacter._DRAW_HEIGHT
+            this.playerCharacter._PLAYERIMAGE,
+            this.frameX, this.frameY,
+            _SPRITE_WIDTH, _SPRITE_HEIGHT,
+            this.playerCharacter.distanceFromSide,
+            window.innerHeight - this.playerCharacter.currentHeight,
+            this.playerCharacter._DRAW_WIDTH,
+            this.playerCharacter._DRAW_HEIGHT
         );
 
         this.gameFrame++;

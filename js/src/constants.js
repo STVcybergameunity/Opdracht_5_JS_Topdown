@@ -1,13 +1,12 @@
-
-import { player } from "./player.js";
 export const KEYS ={
     
-    _MOVELEFT: "A",
+    _MOVEDOWN: "S",
     _MOVERIGHT: "D",
     _JUMP: "Space",
     _CHANGE: "Shift",
     _ATTACK:  0,
     _PAUSE: "Escape",
+    _MOVELEFT: "A"
 
 }
 
@@ -15,6 +14,7 @@ export const _GRAVITY = 1
 export const _SKILLCOOLDOWNT = 5000;
 
 export const _ELEMENTS = {
+
     _COOLDOWN_ELEMENT: document.querySelector(".feedback"),
     _START_SCREEN_ELEMENT: document.querySelector("header"),
     _GAME_SCREEN_ELEMENT: document.querySelector("main"),
@@ -22,6 +22,7 @@ export const _ELEMENTS = {
     _SCORE_SCREEN_ELEMENT: document.querySelector(".score"),
     _AMMO_ELEMENT: document.querySelector(".ammo"),
     _BACKGROUND_ELEMENT: document.querySelector("#background")
+    
 }
 
 /*****************************************
@@ -33,9 +34,16 @@ export const PlayerSize = {
     _HEIGHT: 523
 }
 
-export const EnemySize = {
-    _ENEMY_WIDTH: 266,
-    _ENEMY_HEIGHT: 188
+export const Enemy = {
+    _ENEMY_WIDTH: 213,
+    _ENEMY_HEIGHT: 212,
+    _ENEMY_IMG: 'img/enemy4.png',
+    _ENTITY_STATE_ENEMY: 'enemy'
+}
+
+export const HitDetection = {
+    _PLAYER_DIAMETER: 150,
+    _ENEMY_DIAMETER:  100,
 }
 
 function getSpriteLoc(amountOfFrames, spritesheet_row, startFrame = 0){
@@ -43,7 +51,7 @@ function getSpriteLoc(amountOfFrames, spritesheet_row, startFrame = 0){
     for (let i = 0 + startFrame;i<=amountOfFrames;i++){
         returnarr[i]={
             x: PlayerSize._WIDTH*i,
-            y: PlayerSize._WIDTH*spritesheet_row
+            y: PlayerSize._HEIGHT*spritesheet_row
         };
     }
     return returnarr;
@@ -61,12 +69,9 @@ export const spriteAnimations = {
         loc: getSpriteLoc(7,1)
     },
     "fall": {
-        loc: getSpriteLoc(7,1,3)
-    },
-    "run": {
         loc: getSpriteLoc(7,2)
     },
-    "fall": {
+    "run": {
         loc: getSpriteLoc(7,3)
     },
     "dizzy": {

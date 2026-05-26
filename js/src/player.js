@@ -1,27 +1,31 @@
 import { animation } from "./animation.js";
+import { menus } from "./menus.js";
 import { PlayerSize, KEYS, _GRAVITY, _SKILLCOOLDOWNT, _ELEMENTS } from "./constants.js";
+import { hitdetection } from "./hitdetection.js";
 export class player{
 
     constructor(movementInstance){
 
         this.entityState = "run";
-        this._DRAW_WIDTH = PlayerSize._WIDTH*0.5;
-        this._DRAW_HEIGHT = PlayerSize._HEIGHT*0.5;
+        this.size_multiplier = 0.5
+        this._DRAW_WIDTH = PlayerSize._WIDTH * this.size_multiplier;
+        this._DRAW_HEIGHT = PlayerSize._HEIGHT * this.size_multiplier;
         this._PLAYERIMAGE = new Image();
+        this._PLAYERSPAWNHEIGHT = this._DRAW_HEIGHT * 1.5;
 
-        this.skillCooldownT = _SKILLCOOLDOWNT; // ms
+        this.skillCooldownT = _SKILLCOOLDOWNT;
         this.gameFrame = 0;
-        this.movement = movementInstance
+        this.movement = movementInstance;
         this.animationTimer = 0;
         this.animationInterval = 200;
         this.velocityY = 0;
-        this.distanceFromSide = 0
-        this.isJumping = false
-        this.currentHeight = this._PLAYERSPAWNHEIGHT
+        this.distanceFromSide = 0;
+        this.isJumping = false;
         this._GROUND_HEIGHT = this._DRAW_HEIGHT * 1.5;
         this.currentHeight = this._GROUND_HEIGHT;
-        this.boomPlaying = false;
-        this.skillCooldown = false
+        this.boomActive = false;
+        this.skillCooldown = false;
+        this.oneShotAnimations = new Set(['boom', 'ko']);
 
     }
 
@@ -36,12 +40,19 @@ export class player{
 
     }
 
-    onBoomComplete() {
-        this.boomPlaying = false;
-        this.entityState = "run"
+    onOneShotComplete(animationName) {
+        if (animationName === 'boom') {
+            this.boomActive = false;
+            this.entityState = "run";
+            if (this.velocityY > 0) {
+                this.velocityY = 0;
+            }
+        } else if (animationName === 'ko') {
+
+        }
     }
  
-    update(delta, keysDown, _ANIMATION_STATE) {
+    update(delta, keysDown, _ANIMATION_STATE, playerHit) {
 
         if (this.skillCooldown && this.skillCooldownT > 0){
 
@@ -53,21 +64,30 @@ export class player{
             _ELEMENTS._COOLDOWN_ELEMENT.innerHTML = ""
             this.skillCooldownT = 0;
         }
-        
+
+        if (playerHit && !this.boomActive){
+            this.playOneShot('ko');
+            this.currentHeight = this._GROUND_HEIGHT
+        }
 
         /************************
          *  Deals with jumping  *
          ************************/ 
 
-        if (this.boomPlaying) return;
+        if (this.boomActive) return;
  
-        if (keysDown[KEYS._JUMP] && !this.isJumping) {
+        if (keysDown[KEYS._JUMP] && !this.isJumping) 
             this.jump();
-        }
  
         if (this.isJumping) {
             this.velocityY -= _GRAVITY;
             this.currentHeight += this.velocityY;
+        }
+
+        if (this.isJumping && keysDown[KEYS._MOVEDOWN] && this.velocityY > 0){
+
+            this.velocityY = 0
+
         }
  
         if (this.currentHeight <= this._GROUND_HEIGHT) {
@@ -76,13 +96,13 @@ export class player{
             this.isJumping = false;
         }
  
-        if (this.isJumping && !keysDown[KEYS._MOVERIGHT]) {
+        if (this.isJumping) {
             if (this.velocityY > 0) {
                 this.entityState = "jump";
             } else {
                 this.entityState = "fall";
             }
-        } else if(!keysDown[KEYS._MOVERIGHT]){
+        } else {
 
             this.entityState = "run"
 
@@ -92,31 +112,46 @@ export class player{
          *  Deals with teleport  *
          *************************/
 
-        //try to make a animation repeat atleast once
-
         if (this.skillCooldownT <= 0){
 
             this.skillCooldown = false
             this.skillCooldownT = _SKILLCOOLDOWNT
         }
 
-        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide === 0 && this.skillCooldown === false) {
+        if (keysDown[KEYS._MOVERIGHT] && this.distanceFromSide < 500 && this.skillCooldown === false) {
 
-            this.entityState = "boom"
-            this.boomPlaying = true
             this.skillCooldown = true
             this.distanceFromSide = 1000
+            this.playOneShot('boom');
 
-        }else if(this.distanceFromSide !=0){
+        }
 
+        if(this.isJumping){
+
+            this.distanceFromSide += 4
+
+        }
+
+        if (this.distanceFromSide !=0 && !this.isJumping && keysDown[KEYS._MOVELEFT]){
+
+            this.distanceFromSide -= 16
+
+        }else if(this.distanceFromSide !=0 && !this.isJumping)
             this.distanceFromSide -= 8
 
-        }else if(this.distanceFromSide < 0){
+        if(this.distanceFromSide < 0){
 
             this.distanceFromSide = 0
 
         }
  
+    }
+
+    playOneShot(animationName) {
+
+        this.boomActive = true;
+        this.entityState = animationName;
+        
     }
  
 }

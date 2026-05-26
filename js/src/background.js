@@ -1,4 +1,3 @@
-
 import { canvas } from "./canvas.js";
 
 export class background{
@@ -17,6 +16,7 @@ export class background{
         this.backgroundLoaded = false;
         this._BACKGROUND_LAYERS_IMAGES = [];
         this.backgroundFrame = 0;
+        this.death = false
 
     }
 
@@ -67,7 +67,11 @@ export class background{
 
     }
 
-    animateBackground(){
+    animateBackground(playerHit){
+
+        if (playerHit){
+            this.death = true
+        }
  
         if(this.backgroundLoaded === false){
  
@@ -79,18 +83,19 @@ export class background{
  
         }
  
-
-        this.canvas._BACKGROUND_CTX.clearRect(0, 0, this.canvas._BACKGROUND_CANVAS_WIDTH, this.canvas._BACKGROUND_CANVAS_HEIGHT);
+        if (!this.death){
+            this.canvas._BACKGROUND_CTX.clearRect(0, 0, this.canvas._BACKGROUND_CANVAS_WIDTH, this.canvas._BACKGROUND_CANVAS_HEIGHT);
+        
+            this._BACKGROUND_LAYERS_IMAGES.forEach(object => {
+    
+                object.update(this.backgroundFrame);
+                object.draw();
+    
+            });
  
-        this._BACKGROUND_LAYERS_IMAGES.forEach(object => {
+            this.backgroundFrame++;
  
-            object.update(this.backgroundFrame);
-            object.draw();
+        };
  
-        });
- 
-        this.backgroundFrame++;
- 
-    };
- 
+    }
 }
