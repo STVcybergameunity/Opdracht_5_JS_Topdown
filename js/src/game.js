@@ -24,6 +24,7 @@ export class game {
         this.lastTime = 0;
         this.score = 0;
         this.scoreTimer = 0;
+        this.playerDead = false;
  
     }
  
@@ -31,7 +32,6 @@ export class game {
  
         this._MENUS.buttonClick();
         this._BACKGROUND.animateBackground();
-        setInterval(this.setScore, 1000)
 
         requestAnimationFrame((timestamp) => this.loop(timestamp));
  
@@ -44,6 +44,11 @@ export class game {
         this.lastTime = timestamp;
 
         let playerHit = this._HITDETECTION.checkHits();
+
+        // if a hit is detected, mark player as dead (persistent)
+        if (playerHit) this.playerDead = true;
+
+        // hitboxes are shown by default
 
         this._BACKGROUND.animateBackground(playerHit);
 
@@ -58,13 +63,17 @@ export class game {
                 enemy.enemy_Draw();
             });
 
+            // draw hitboxes after clearing/drawing so they're visible
+            this._HITDETECTION.renderHitboxes();
 
-            this.scoreTimer += delta;
+            if (!this.playerDead) {
+                this.scoreTimer += delta;
 
-            if (this.scoreTimer >= 1000) {
-                this.score++;
-                this.scoreTimer = 0;
-                _ELEMENTS._SCORE_SCREEN_ELEMENT.innerHTML = "score:" + this.score;
+                if (this.scoreTimer >= 1000) {
+                    this.score++;
+                    this.scoreTimer = 0;
+                    _ELEMENTS._SCORE_SCREEN_ELEMENT.innerHTML = "score:" + this.score;
+                }
             }
 
         }

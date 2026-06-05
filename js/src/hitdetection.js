@@ -7,8 +7,10 @@ export class hitdetection {
         this.playerCharacter = playerCharacter;
         this.enemies = enemies;
         this.canvas = canvasInstance;
-        this.showHitboxes = true; // toggle this to hide/show hitboxes
+        this.showHitboxes = false;
         this.gotHit = false;
+        this.lastPlayerCircle = null;
+        this.lastHitEnemies = [];
     }
 
     isHit(player, enemy) {
@@ -50,14 +52,17 @@ export class hitdetection {
         });
 
 
-        if (this.showHitboxes) {
-            this.drawHitboxes(playerCircle, hitEnemies);
+        // store results for later rendering
+        this.lastPlayerCircle = playerCircle;
+        this.lastHitEnemies = hitEnemies;
+
+        if (hitEnemies.length > 0) {
+            this.gotHit = true;
+            return true;
         }
 
-        if(hitEnemies.length > 0) 
-            return (this.gotHit = true);
-                    
-        return (this.gotHit = false);
+        this.gotHit = false;
+        return false;
 
     }
 
@@ -95,6 +100,11 @@ export class hitdetection {
 
         });
 
+    }
+
+    renderHitboxes() {
+        if (!this.showHitboxes || !this.lastPlayerCircle) return;
+        this.drawHitboxes(this.lastPlayerCircle, this.lastHitEnemies);
     }
 
     checkEnemies(enemy) {
