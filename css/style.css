@@ -100,7 +100,7 @@
     background-clip: content-box, border-box;
     z-index: 2;
     width: 20%;
-    height: 15%;
+    height: auto;
 
     &:hover{
         cursor: pointer;

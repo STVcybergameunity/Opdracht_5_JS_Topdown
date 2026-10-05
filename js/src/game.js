@@ -7,6 +7,7 @@ import { movement } from "./parser.js";
 import { enemy } from "./enemy.js";
 import { _ELEMENTS } from "./constants.js";
 import { hitdetection } from "./hitdetection.js";
+import { restartGame } from "./restart.js";
  
 
 export class game {
@@ -21,6 +22,7 @@ export class game {
         this._ENEMIES = this.generate_enemies(4, this._CANVAS);
         this._HITDETECTION = new hitdetection(this.playerCharacter, this._ENEMIES, this._CANVAS);
         this._BACKGROUND = new background(this._CANVAS, null, 1);
+        this._RESTART = new restartGame();
         this.lastTime = 0;
         this.score = 0;
         this.scoreTimer = 0;
@@ -75,6 +77,8 @@ export class game {
                     _ELEMENTS._SCORE_SCREEN_ELEMENT.innerHTML = "score:" + this.score;
                 }
             }
+
+            this._RESTART.update(delta, this);
 
         }
  
